@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 
-const PokemonBasicFetchAxios = () => {
+const PokemonBasicFetch = () => {
   const [pokemonData, setPokemonData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -9,24 +8,23 @@ const PokemonBasicFetchAxios = () => {
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
-        // fetch data from api
-        // handle data
-      } catch (error) {
-        // handle error
+        alert("Welcome to Pokemon");
+        const response = await fetch(
+          "https://pokeapi.co/api/v2/ability/?limit=20&offset=20"
+        );
+        const data = await response.json();
+        setPokemonData(data.results);
+      } catch (err) {
+        setError(err.message);
       } finally {
-        // handle loading
+        setLoading(false);
       }
     };
-    // invoke function
+    fetchPokemon();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
@@ -40,4 +38,4 @@ const PokemonBasicFetchAxios = () => {
   );
 };
 
-export default PokemonBasicFetchAxios;
+export default PokemonBasicFetch;

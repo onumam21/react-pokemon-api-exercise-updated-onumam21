@@ -1,4 +1,4 @@
-// import useEffect and useState
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const typeColors = {
@@ -22,20 +22,34 @@ const typeColors = {
   steel: "bg-gray-500",
 };
 
-const PokemonFetch = () => {
+const PokemonFetchAxios = () => {
   const [pokemonList, setPokemonList] = useState([]);
 
   useEffect(() => {
     const fetchAllPokemon = async () => {
       try {
         // Fetch initial list of Pokémon
+        const response = await axios.get(
+          "https://pokeapi.co/api/v2/pokemon?limit=20"
+        );
+        const data = response.data;
+
         // Sequentially fetch details for each Pokémon
+        const detailedPokemonData = await Promise.all(
+          data.results.map(async (pokemon) => {
+            const pokemonResponse = await axios.get(pokemon.url);
+            return pokemonResponse.data;
+          })
+        );
+
         // Update the state with the detailed Pokémon data
+        setPokemonList(detailedPokemonData);
       } catch (error) {
         console.error("Failed to fetch Pokémon:", error);
       }
     };
     // invoke function
+    fetchAllPokemon(); // บรรทัดที่ 41
   }, []);
 
   return (
@@ -71,4 +85,4 @@ const PokemonFetch = () => {
   );
 };
 
-export default PokemonFetch;
+export default PokemonFetchAxios;

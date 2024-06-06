@@ -38,6 +38,7 @@ const PokemonSearchFetch = () => {
         setSuggestions(data.results.map((p) => p.name));
       } catch (err) {
         console.error("Failed to fetch Pokémon names:", err);
+        setError("Failed to fetch Pokémon names");
       }
     };
 
@@ -47,7 +48,6 @@ const PokemonSearchFetch = () => {
   const searchPokemon = async (e) => {
     e.preventDefault();
     setError(null);
-    setPokemon(null);
 
     try {
       const response = await fetch(
