@@ -9,28 +9,12 @@ const PokemonBasicFetch = () => {
     const fetchPokemon = async () => {
       try {
         // fetch data from api
-        const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=10"
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+
 
         // handle data
-        const data = await response.json();
 
-        setPokemonData(data.results);
-        console.log(pokemonData);
-      } catch (error) {
-        // handle error
-        setError(error.message);
-      } finally {
-        // handle loading
-        setLoading(false);
-      }
-    };
     // invoke function
-    fetchPokemon();
+
   }, []);
 
   if (loading) {
