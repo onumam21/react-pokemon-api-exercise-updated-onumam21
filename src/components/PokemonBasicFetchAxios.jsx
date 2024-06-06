@@ -1,6 +1,7 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
-const PokemonBasicFetch = () => {
+const PokemonBasicFetchAxios = () => {
   const [pokemonData, setPokemonData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -9,18 +10,11 @@ const PokemonBasicFetch = () => {
     const fetchPokemon = async () => {
       try {
         // fetch data from api
-        const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=10"
+        const response = await axios.get(
+          "https://pokeapi.co/api/v2/pokemon?limit=20"
         );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
         // handle data
-        const data = await response.json();
-
-        setPokemonData(data.results);
-        console.log(pokemonData);
+        setPokemonData(response.data.results);
       } catch (error) {
         // handle error
         setError(error.message);
@@ -53,4 +47,4 @@ const PokemonBasicFetch = () => {
   );
 };
 
-export default PokemonBasicFetch;
+export default PokemonBasicFetchAxios;
